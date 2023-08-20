@@ -1,6 +1,7 @@
-
+// корневой селектор для среза store
+// самый root'овый селектор
 const todoSelector = (store) => store.todo;
-
+// получаем все id тодушек
 export const todoIdsSelector = (store) => todoSelector(store)?.allIds || [];
 
 export const todoByIdSelector = (store, id) => {
@@ -17,6 +18,6 @@ export const todoByIdSelector = (store, id) => {
     id,
   };
 }
-
+// получаем все todo, которые есть в приложении
 export const todosSelector = (store) =>
   todoIdsSelector(store).map((id) => todoByIdSelector(store, id));

@@ -7,9 +7,11 @@ import { toggleTodo } from "../../store/actions/creators/todo";
 import styles from './index.module.css';
 
 export const Todo = ({ todo }) => {
+  // снова достаем функцию
   const dispatch = useDispatch();
 
   const toggleTodoItem = () => {
+    // функция будет отправлять в стор действие и будет туда отправлять id (toggleTodo)
     dispatch(toggleTodo(todo.id));
   }
 
