@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import cx from "classnames";
 
-import { toggleTodo } from "../../store/actions/creators/todo";
+import { toggleCompleteness } from "../../store/slicers/todo";
 
 import styles from './index.module.css';
 
@@ -12,7 +12,7 @@ export const Todo = ({ todo }) => {
 
   const toggleTodoItem = () => {
     // функция будет отправлять в стор действие и будет туда отправлять id (toggleTodo)
-    dispatch(toggleTodo(todo.id));
+    dispatch(toggleCompleteness({id: todo.id}));
   }
 
   return (
