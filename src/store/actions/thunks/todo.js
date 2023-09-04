@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { addTodoFailure, addTodoStarted, addTodoSuccess, fetchTodosFailure, fetchTodosStarted, fetchTodosSuccess } from "../creators/todo";
+import { addTodoFailure, addTodoStarted, addTodoSuccess, fetchTodosFailure, fetchTodosStarted, fetchTodosSuccess, toggleTodoFailure, toggleTodoStarted, toggleTodoSuccess } from "../creators/todo";
 
 
 const BASE_URL = "https://629470d963b5d108c18b87da.mockapi.io/todos";
@@ -30,6 +30,20 @@ export const createTodo = (title) => async (dispatch) => {
     dispatch(addTodoSuccess(data));
   } catch (error) {
     dispatch(addTodoFailure(error));
+  }
+};
+
+export const toggleTodo = (id, completed) => async (dispatch) => {
+  dispatch(toggleTodoStarted());
+
+  try {
+    const { data } = await axios.put(`${BASE_URL}/${id}`, {
+      completed,
+    });
+
+    dispatch(toggleTodoSuccess(data));
+  } catch (error) {
+    dispatch(toggleTodoFailure(error));
   }
 };
 

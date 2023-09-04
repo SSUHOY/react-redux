@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import styles from "./index.module.css";
-import { addTodo } from "../../store/actions/creators/todo";
 import { createTodo } from "../../store/actions/thunks/todo";
 
 export const AddTodo = () => {
