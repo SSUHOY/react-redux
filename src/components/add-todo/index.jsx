@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../store/slicers/todo";
 
 import styles from "./index.module.css";
+import { addTodo } from "../../store/actions/creators/todo";
+import { createTodo } from "../../store/actions/thunks/todo";
 
 export const AddTodo = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ export const AddTodo = () => {
 // функция , которая обнуляет состояние инпута, после добавления нового элемента
   const handleAddTodo = () => {
     // хук позволяет получить функцию dispatch, которая позволяет действия в стор, отправляем в стор результат выполнения action creator addTodo
-    dispatch(addTodo(value));
+    dispatch(createTodo(value));
     setValue("");
   };
 

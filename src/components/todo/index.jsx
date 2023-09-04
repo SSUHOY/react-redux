@@ -5,6 +5,7 @@ import cx from "classnames";
 import { toggleCompleteness } from "../../store/slicers/todo";
 
 import styles from './index.module.css';
+import { toggleTodo } from "../../store/actions/creators/todo";
 
 export const Todo = ({ todo }) => {
   // снова достаем функцию
@@ -12,9 +13,8 @@ export const Todo = ({ todo }) => {
 
   const toggleTodoItem = () => {
     // функция будет отправлять в стор действие и будет туда отправлять id (toggleTodo)
-    dispatch(toggleCompleteness({id: todo.id}));
+    dispatch(toggleTodo({id: todo.id}));
   }
-
   return (
     <li className={styles.item} onClick={toggleTodoItem}>
       {todo.completed ? "👌" : "👋"}{" "}
@@ -23,7 +23,8 @@ export const Todo = ({ todo }) => {
           [styles.completed]: todo.completed,
         })}
       >
-        {todo.content}
+        {/* {todo.content} */}
+        {todo.title}
       </span>
     </li>
   );

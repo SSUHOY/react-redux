@@ -1,4 +1,6 @@
-import { FETCH_TODOS_FAILURE, FETCH_TODOS_STARTED, FETCH_TODOS_SUCCESS } from "../types/todo";
+import { ADD_TODO, ADD_TODOS_FAILURE, ADD_TODOS_STARTED, ADD_TODOS_SUCCESS, FETCH_TODOS_FAILURE, FETCH_TODOS_STARTED, FETCH_TODOS_SUCCESS, TOGGLE_TODO } from "../types/todo";
+
+let nextTodoId = 0;
 
 export const fetchTodosStarted = () => ({
     type: FETCH_TODOS_STARTED,
@@ -16,4 +18,36 @@ export const fetchTodosStarted = () => ({
     payload: {
       error,
     },
-  })
+})
+  
+export const addTodo = (content) => ({
+  type: ADD_TODO,
+  payload: {
+    id: ++nextTodoId,
+    content,
+  }
+})
+
+export const toggleTodo = (id) => ({
+  type: TOGGLE_TODO,
+  payload: {id},
+})
+
+
+export const addTodoSuccess = (todo) => ({
+  type: ADD_TODOS_SUCCESS,
+  payload: {
+    ...todo,
+  },
+});
+
+export const addTodoStarted = () => ({
+  type: ADD_TODOS_STARTED,
+});
+
+export const addTodoFailure = (error) => ({
+  type: ADD_TODOS_FAILURE,
+  payload: {
+    error,
+  },
+});

@@ -12,13 +12,15 @@ export const TodoList = () => {
   const loading = useSelector(todosLoadingSelector);
   const error = useSelector(todosErrorSelector);
 
-  const isEmptyList = !loading && !todos?.length;
-// запрос данных
-  
   // маунт компонента
   useEffect(() => {
     dispatch(fetchTodos());
-  }, []);
+  }, [dispatch]);
+
+
+  const isEmptyList = !loading && !todos?.length;
+// запрос данных
+  
 
   // смотрим на состояние загрузки и показываем соответсвующий ui
    if (loading) {
