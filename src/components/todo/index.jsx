@@ -1,27 +1,33 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import cx from "classnames";
 
-import { toggleTodo } from "../../store/actions/thunks/todo";
 
 import styles from './index.module.css';
+import { useUpdateTodoMutation } from "../../serviсes/todo";
 
 export const Todo = ({ todo }) => {
-  const dispatch = useDispatch();
+  const [updateTodo, { isLoading }] = useUpdateTodoMutation();
+
+  const { id, title, completed } = todo;
 
   const toggleTodoItem = () => {
-     dispatch(toggleTodo(todo.id, !todo.completed));
+    updateTodo({ id, completed: !completed});
   }
 
   return (
-    <li className={styles.item} onClick={toggleTodoItem}>
-      {todo.completed ? "👌" : "👋"}{" "}
+    <li
+      className={cx(styles.item, {
+        [styles.loading]: isLoading,
+      })}
+      onClick={toggleTodoItem}
+    >
+      {completed ? "👌" : "👋"}{" "}
       <span
         className={cx({
-          [styles.completed]: todo.completed,
+          [styles.completed]: completed,
         })}
       >
-        {todo.title}
+        {title}
       </span>
     </li>
   );

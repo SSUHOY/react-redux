@@ -1,43 +1,30 @@
-import {useEffect} from 'react';
-import { useSelector, useDispatch } from "react-redux";
+
+import { useGetAllTodosQuery } from "../../serviсes/todo";
 import { Todo } from "../todo";
-import styles from './index.module.css';
-import { todosErrorSelector, todosLoadingSelector, todosSelector } from '../../store/selectors/todo';
-import { fetchTodos } from '../../store/actions/thunks/todo';
+import styles from "./index.module.css";
 
 export const TodoList = () => {
-  const dispatch = useDispatch();
+  // результат выполнения хука useGetAllTodosQuery - это объект,
+  // декларируем свойства из объекта
+  const { data, error, isLoading } = useGetAllTodosQuery();
 
-  const todos = useSelector(todosSelector);
-  const loading = useSelector(todosLoadingSelector);
-  const error = useSelector(todosErrorSelector);
+  const isEmptyList = !isLoading && !data?.length;
 
-  // маунт компонента
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
-  const isEmptyList = !loading && !todos?.length;
-// запрос данных
-  
-
-  // смотрим на состояние загрузки и показываем соответсвующий ui
-   if (loading) {
-     return <p>Loading...</p>;
-   }
-
-   if (error) {
-     return <p>{error.message}</p>;
-   }
-
-   if (isEmptyList) {
-     return <p>No todos, yay!</p>;
-   }
+  if (isEmptyList) {
+    return <p>No todos, yay!</p>;
+  }
 
   return (
     <ul className={styles.list}>
-      {todos.map((todo) => (
+      {data.map((todo) => (
         <Todo key={todo.id} todo={todo} />
       ))}
     </ul>

@@ -1,13 +1,12 @@
-// конфигирурем стор
 import { configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import todoReducer from "./redusers/todo";
-// переменнаая стор - результат выполнения функции configureStore
+import { todoApi } from "../serviсes/todo";
+
 export const store = configureStore({
-  // декларация редьюсеров
   reducer: {
-    todo: todoReducer,
+    // импорт todoApi, достаем ключ reducerPath, значение todoApi.reducer
+    [todoApi.reducerPath]: todoApi.reducer,
   },
-  // добавляет thunk - соединяем две библиотеки
-  middleware: [thunk],
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(todoApi.middleware),
 });
