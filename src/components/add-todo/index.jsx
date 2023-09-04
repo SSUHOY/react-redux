@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "../../store/actions/creators/todo";
-
 import styles from "./index.module.css";
+import { useAddTodoMutation } from "../../serviсes/todo";
+
+
+
 
 export const AddTodo = () => {
-  const dispatch = useDispatch();
+  const [addTodo, { isLoading }] = useAddTodoMutation();
   const [value, setValue] = useState("");
 
   const onInputChange = (evt) => {
@@ -13,16 +14,26 @@ export const AddTodo = () => {
   };
 
   const handleAddTodo = () => {
-    dispatch(addTodo(value));
+    addTodo({
+      title: value,
+      completed: false,
+    });
     setValue("");
   };
 
   return (
     <div>
       <input type="text" value={value} onChange={onInputChange} />
-      <button className={styles.addButton} onClick={handleAddTodo}>
+      <button
+        className={styles.addButton}
+        onClick={handleAddTodo}
+        disabled={isLoading}
+      >
         Add todo
       </button>
     </div>
   );
 };
+// Если вы посмотрите во вкладке network, вы можете обнаружить, что запрос на создание элемента завершился успешно. Но хотелось бы обновлять данные после того, как создался элемент. Легко!
+
+// imp

@@ -1,22 +1,10 @@
-
+// корневой селектор
 const todoSelector = (store) => store.todo;
-
-export const todoIdsSelector = (store) => todoSelector(store)?.allIds || [];
-
-export const todoByIdSelector = (store, id) => {
-  const todoStore = todoSelector(store);
-
-  if (!todoStore) {
-    return {};
-  }
-  
-  const todoItem = todoStore.byIds[id];
-
-  return {
-    ...todoItem,
-    id,
-  };
-}
-
-export const todosSelector = (store) =>
-  todoIdsSelector(store).map((id) => todoByIdSelector(store, id));
+// вытаскиваем todo селекторы
+export const todosSelector = (store) => {
+  return todoSelector(store)?.todos || [];
+};
+// получаем состояние загрузки 
+export const todosLoadingSelector = (store) => todoSelector(store)?.loading;
+// и состояние ошибки
+export const todosErrorSelector = (store) => todoSelector(store)?.error;

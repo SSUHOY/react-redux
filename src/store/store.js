@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todoReducer from "./reducers/todo";
+import { todoApi } from "../serviсes/todo";
 
 export const store = configureStore({
   reducer: {
-    todo: todoReducer,
-  }
+    // импорт todoApi, достаем ключ reducerPath, значение todoApi.reducer
+    [todoApi.reducerPath]: todoApi.reducer,
+  },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(todoApi.middleware),
 });
